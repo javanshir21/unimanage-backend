@@ -10,26 +10,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin(origins = "http://localhost:5173")
 public class CustomerController {
 
     @Autowired
     private CustomerService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id){
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
         Customer customer = service.getById(id);
-        return ResponseEntity.ok().body(customer);
-    };
-
-    @PostMapping()
-    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer request){
-        Customer customer = service.save(request);
-        return ResponseEntity.ok().body(customer);
+        return ResponseEntity.ok(customer);
     }
 
-    @GetMapping()
-    public ResponseEntity<List<Customer>> getAll(){
-        List<Customer> customers = service.getAll();
-        return ResponseEntity.ok().body(customers);
-    };
+    @PostMapping
+    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer request) {
+        Customer customer = service.save(request);
+        return ResponseEntity.ok(customer);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Customer>> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
 }
+
